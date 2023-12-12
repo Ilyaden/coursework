@@ -1,0 +1,98 @@
+
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <link rel="stylesheet" href="{% static 'main/css/index/bootstrap.css' %}"  />
+
+
+</head>
+
+
+<body>
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'home' %}" class="nav-link px-2 text-white">Играть</a></li>
+          <li><a href="{% url 'games_history' %}" class="nav-link px-2 text-secondary">История игр</a></li>
+          <li><a href="{% url 'active_games' %}" class="nav-link px-2 text-white">Активные игры</a></li>
+        
+        </ul>
+
+
+        <div class="text-end">
+          Добро пожаловать, {{account}}!
+          <a href="{% url 'logout' %}">
+          <button type="button" class="btn btn-warning">Выйти</button>
+        </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+
+
+  <div class="container px-4 py-5" id="featured-3">
+    <h1 class="pb-2 border-bottom">История игр</h1>
+    {% if games %}
+    {% for el in games %}
+    <div class="row g-4 py-5 ">
+
+      <div class="feature col">
+        
+        <h2>Игрок 1</h2>
+        <p>{{el.username}}</p>
+        
+      </div>
+      <div class="feature col">
+        
+        <h2>Игрок 2</h2>
+        <p>{{el.username2}}</p>
+       
+      </div>
+      <div class="feature col">
+      
+        <h2>Слово</h2>
+        <p>{{el.word}}</p>
+        
+      </div>
+      <div class="feature col">
+      
+        <h2>Слово отгадано?</h2>
+        {% if el.game_result == True %}
+          <p>Да</p>
+        {% else %}
+          <p>Нет</p>
+        {% endif %}
+        
+        
+      </div>
+    
+    </div>
+
+    {% endfor %}
+    {% else %}
+    <h2 class="pb-2">Вы пока не сыграли ни одной игры</h2>
+    {% endif %}
+  </div>
+
+    </div>
+  </div>
+</main>
+</body>
+</html>
+
+
+
+
+

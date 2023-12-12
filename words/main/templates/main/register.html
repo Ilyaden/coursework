@@ -1,0 +1,79 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <link rel="stylesheet" href="{% static 'main/css/index/bootstrap.css' %}"  />
+
+
+</head>
+
+<style type="text/css">
+  .error {
+    color: red;
+    font-weight: bold;
+    padding-top: 20px;
+}
+</style>
+
+
+<body>
+    
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mt-md-4 pb-5">
+
+              <h2 class="fw-bold mb-2 text-uppercase">Регистрация</h2>
+              <p class="text-white-50 mb-5">Чтобы начать игру, зарегистрируйтесь</p>
+
+
+              <form method="post">
+              {% csrf_token %}
+              <div class="form-outline form-white mb-4">
+                {{ form.username }}
+                <label class="form-label" for="typeEmailX">Логин</label>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                {{ form.password1 }}
+         
+                <label class="form-label" for="typePasswordX">Пароль</label>
+
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                {{ form.password2 }}
+                
+                <label class="form-label" for="typePasswordX">Пароль еще раз</label>
+
+              </div>
+
+              <button class="btn btn-outline-light btn-lg px-5" type="submit">Регистрация</button>
+              </form>
+              {% if error_message %}
+                  <div class="error">{{ error_message }}</div>
+              {% endif %}
+             
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
+
+
+
+
+

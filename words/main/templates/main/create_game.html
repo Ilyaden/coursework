@@ -1,0 +1,106 @@
+
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <link rel="stylesheet" href="{% static 'main/css/index/bootstrap.css' %}"  />
+
+
+</head>
+
+
+</style>
+
+
+<body>
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">Играть</a></li>
+          <li><a href="{% url 'games_history' %}" class="nav-link px-2 text-white">История игр</a></li>
+          <li><a href="{% url 'active_games' %}" class="nav-link px-2 text-white">Активные игры</a></li>
+        
+        </ul>
+        <div class="text-end">
+          Добро пожаловать, {{account}}!
+          <a href="{% url 'logout' %}">
+          <button type="button" class="btn btn-warning">Выйти</button>
+        </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+<section class="gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mt-md-4 pb-5">
+
+              <h2 class="fw-bold mb-2 text-uppercase">Новая игра</h2>
+              <p class="text-white-50 mb-5">Чтобы начать игру, введите данные</p>
+
+
+              <form method="post">
+              {% csrf_token %}
+              <div class="form-outline form-white mb-4">
+                {{ form.username }}
+                <label class="form-label" for="typeEmailX">Имя первого игрока</label>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                {{ form.username2 }}
+         
+                <label class="form-label" for="typePasswordX">Имя второго игрока</label>
+
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                {{ form.word }}
+                
+                <label class="form-label" for="typePasswordX">Слово</label>
+
+              </div>
+              <button class="btn btn-outline-light btn-lg px-5" type="submit">Начать игру</button>
+              {% if form.errors %}
+                  <ul style="padding-top: 10px;">
+                  {% for field in form %}
+                      {% for error in field.errors %}
+                      <li style="color:red">{{ error }}</li>
+                      {% endfor %}
+                  {% endfor %}
+                  </ul>
+              {% endif %}
+              </form>
+              
+              {% if error_message %}
+                  <div class="error">{{ error_message }}</div>
+              {% endif %}
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,138 @@
+
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <link rel="stylesheet" href="{% static 'main/css/index/bootstrap.css' %}"  />
+
+
+</head>
+
+<body>
+    
+{% if games.game_result == False and games.is_game_active == False %}
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <img id="hangman-image" src="" alt="Виселица" width="800" height="400">
+
+        <script>
+          var number_of_mistakes = {{ number_of_mistakes }};
+          var image_path = '/static/main/' + number_of_mistakes + '.png';
+          document.getElementById('hangman-image').src = image_path;
+        </script>
+              </div>
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mt-md-4 pb-5">
+
+              <h1 class="fw-bold mb-2 text-uppercase">Вы проиграли</h1>
+
+              <p class="text-white-50 mb-5">Загаданное слово: {{games.word}}</p>
+
+              <a href="{% url 'home' %}"><button class="btn btn-outline-light btn-lg px-5" type="submit">Новая игра</button></a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% elif games.game_result == True and games.is_game_active == False %}
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mt-md-4 pb-5">
+
+              <h1 class="fw-bold mb-2 text-uppercase">Вы выиграли! </h1>
+              <p class="text-white-50 mb-5">Загаданное слово: {{games.word}}</p>
+              <a href="{% url 'home' %}"><button class="btn btn-outline-light btn-lg px-5" type="submit">Новая игра</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% else %}
+
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <img id="hangman-image" src="" alt="Виселица" width="800" height="400">
+        <script>
+          var number_of_mistakes = {{ number_of_mistakes }};
+          var image_path = '/static/main/' + number_of_mistakes + '.png';
+          document.getElementById('hangman-image').src = image_path;
+        </script>
+              </div>
+
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mt-md-4 pb-5">
+
+              <h1 class="fw-bold mb-2 text-uppercase">{{encrypted_word}}</h1>
+              <p class="text-white-50 mb-2">Игра завершится, когда будет 7 ошибок</p>
+              <p class="text-white-50 mb-5">Количество ошибок: {{number_of_mistakes}}</p>
+
+              <form method="post">
+              {% csrf_token %}
+              <div class="form-outline form-white mb-4">
+                {{ form.letter }}
+                <label class="form-label" for="typeEmailX">Введите букву</label>
+              </div>
+
+              <button class="btn btn-outline-light btn-lg px-5" type="submit">Отгадать букву</button>
+              </form>
+              <div style="padding-top:10px">
+                <a href="{% url 'save_game' %}?game_id={{games.pk}}">
+              <button class="btn btn-outline-light btn-lg px-5" type="submit">Сохранить игру</button>
+            </a>
+            </div>
+              {% if form.errors %}
+                  <ul style="padding-top: 10px;">
+                  {% for field in form %}
+                      {% for error in field.errors %}
+                      <li style="color:red">{{ error }}</li>
+                      {% endfor %}
+                  {% endfor %}
+                  </ul>
+              {% endif %}
+              </form>
+              
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+  
+
+</body>
+</html>
+
+
+
+
+
